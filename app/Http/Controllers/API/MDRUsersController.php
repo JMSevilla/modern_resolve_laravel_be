@@ -119,7 +119,7 @@ class MDRUsersController extends Controller implements IUserController, ItokenGe
             'message' => 'dev_registration_success',
             new DevRegistrationResource($dev)
         ];
-        return response()->json(['dev_registration_success', $responseMessage]);
+        return response()->json($responseMessage, 200);
     }
 
     public function userlogin(Request $request) {
