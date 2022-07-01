@@ -124,6 +124,7 @@ class MDRUsersController extends Controller implements IUserController, ItokenGe
 
     public function userlogin(Request $request) {
         if($request->role === 'developer') {
+            
             $validator = Validator::make($request->all(), [
                 'username' => 'required',
                 'password' => 'required'
@@ -134,7 +135,7 @@ class MDRUsersController extends Controller implements IUserController, ItokenGe
                 return response()->json('empty_username_password', 200);
             }
             if($request->isMethod('post')) {
-                $usersloginrequest = MDRUsers::select('*')
+                $usersloginrequest = DB::table('m_d_r_users')->select('*')
                 ->where('username', '=', $request->username)->get();
                 if(!$usersloginrequest->isEmpty()) {
                     foreach($usersloginrequest as $getdata){
@@ -159,7 +160,7 @@ class MDRUsersController extends Controller implements IUserController, ItokenGe
                                 $collectrow['uid'],
                                 'api/checktoken'
                                );
-                               if(!GeneralParams::$result->isEmpty()){
+                               if(!empty(GeneralParams::$result)){
                                 foreach(GeneralParams::$result
                                     as $res
                                     ){
