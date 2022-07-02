@@ -3,6 +3,7 @@
 use App\Models\Branches;
 use App\Models\MDRUsers;
 use App\Models\Tokenization;
+use Illuminate\Support\Facades\DB;
 
 class GeneralParams {
     public static $result = [];
@@ -39,9 +40,8 @@ class GeneralHelper {
 
     public function _init_checktoken($userID){
 
-        GeneralParams::$result = Tokenization::select('*')
-        ->where('userID', '=', $userID)
-        ->where('isvalid', '=', '1')->get();
+        GeneralParams::$result = DB::table('tokenizations')->select('*')
+        ->where('userID', '=', $userID)->get();
         return GeneralParams::$result;
     }
 
@@ -51,7 +51,7 @@ class GeneralHelper {
         return GeneralParams::$dynamic_result;
     }
     public function _init_getAll_branches(){
-        return GeneralParams::$branches = Branches::orderBy('branchID')->get();
+        return GeneralParams::$branches = Branches::orderBy('id')->get();
     }
     public function _init_signout($userID) {
       Tokenization::where('userID', $userID)->update([
