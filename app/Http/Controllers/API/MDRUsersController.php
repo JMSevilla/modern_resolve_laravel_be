@@ -160,7 +160,7 @@ class MDRUsersController extends Controller implements IUserController, ItokenGe
                                 $collectrow['uid'],
                                 'api/checktoken'
                                );
-                               if(!empty(GeneralParams::$result)){
+                               if(count(GeneralParams::$result) !== 0){
                                 foreach(GeneralParams::$result
                                     as $res
                                     ){
